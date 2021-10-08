@@ -1,0 +1,23 @@
+---
+title: "presentation"
+output: ioslides_presentation
+---
+
+```{r, include=FALSE}
+source("Wrangling_code.R", local = knitr::knit_global())
+```
+
+
+```{r, include=FALSE}
+source("Visualizing_function.R", local = knitr::knit_global())
+```
+
+```{r}
+ggplot(Chinatt,aes(index,spending))+geom_line()
+```
+```{r}
+ggplot(Canadatt,aes(index,spending))+geom_line()
+```
+
+From the result we can see that as the human development index increases, people's total spending on health increases. They have positive relation.
+Compare the two curves of China and Canada, China's curve is smoother, while Canada's is more volatile. Perhaps the Canadian economy went through a bit of a wobble at the end. The increase in the Human Development index reflects the improvement of people's living standards, and at the same time, people pay more attention to health. So there's more spending on health issues.
