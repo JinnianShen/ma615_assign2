@@ -2,12 +2,12 @@
 title: "Presentation"
 output: slidy_presentation
 ---
-
+## Souce Wrangling code
 ```{r, include=FALSE}
 source("Wrangling_code.R", local = knitr::knit_global())
 ```
 
-
+## Souce Visualizing function code
 ```{r, include=FALSE}
 source("Visualizing_function.R", local = knitr::knit_global())
 ```
