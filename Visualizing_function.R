@@ -25,7 +25,7 @@ view(newdata)
 #' Hence, I choose to modify the author's visualization to a function.
 #' Here is my modified function to plot the curve that of hdi index vs health spending for a country
 ###########################
-function_vs(data, country){
+function_vs <- function(data, country){
   # data = newdata
   # take China as an example, which is in data[36,]
   country <- newdata[36,] # this number can be changed depending on which country you want to analyze
