@@ -3,6 +3,7 @@ library(tidyverse)
 library(tidyr)
 library(kableExtra)
 library(knitr)
+library(ggplot2)
 
 #Read the selected data set from local
 x<- read.csv(file = "/Users/jinnianshen/Desktop/hdi_human_development_index.csv")
@@ -19,31 +20,31 @@ part3<- data[,c(36:46)]
 newdata<-cbind (part1,part2,part3)
 view(newdata)
 
-#Select China to do analyze
-China<- newdata[36,]
-view(China)
-China1<-China[,c(1:12)]
-China2<-China[,c(1,13:23)]
-Chinap1<- pivot_longer(China1,X2000.x:X2010.x,names_to = "hdi",values_to = "index")
-Chinap2<- pivot_longer(China2,X2000.y:X2010.y,names_to = "health",values_to = "spending")
-Chinap21<-Chinap2[,-1]
-Chinatt<-cbind(Chinap1,Chinap21)
+###########################
+#' In the original visualization_function.R, there does not exist a real function.
+#' Hence, I choose to modify the author's visualization to a function.
+#' Here is my modified function to plot the curve that of hdi index vs health spending for a country
+###########################
+function_vs <- function(data, country){
+  # data = newdata
+  # take China as an example, which is in data[36,]
+  country <- newdata[36,] # this number can be changed depending on which country you want to analyze
+  country1 <- country[,c(1:12)]
+  country2<-country[,c(1,13:23)]
+  country_1<- pivot_longer(country1,X2000.x:X2010.x,names_to = "hdi",values_to = "index")
+  country_2<- pivot_longer(country2,X2000.y:X2010.y,names_to = "health",values_to = "spending")
+  country_21<-country_2[,-1]
+  countrytt<-cbind(country_1,country_21)
+  ggplot(countrytt, aes(index, spending)) + geom_line()
+}
 
-#Select Canada to do analyze
-Canada<- newdata[31,]
-view(Canada)
-Canada1<-Canada[,c(1:12)]
-Canada2<-Canada[,c(1,13:23)]
-Canada1<- pivot_longer(Canada1,X2000.x:X2010.x,names_to = "hdi",values_to = "index")
-Canada2<- pivot_longer(Canada2,X2000.y:X2010.y,names_to = "health",values_to = "spending")
-Canada21<-Canada2[,-1]
-Canadatt<-cbind(Canada1,Canada21)
-
-#ggplot
-#plot the curve that of hdi index verse health spending(China)
-library(ggplot2)
-ggplot(Chinatt,aes(index,spending))+geom_line()
-
-#plot the curve that of hdi index verse health spending(Canada)
-library(ggplot2)
-ggplot(Canadatt,aes(index,spending))+geom_line()
+###########################
+#' Also, I add a new function for the author to explore the correlation of hdi index and health spending
+###########################
+dv <- function(data){
+  # data = newdata
+  data %>%
+    count(index, spending) %>%
+    ggplot(aes(x = index, y = spending)) + 
+    geom_tile(mapping = aes(fill = n))
+}
